@@ -21,6 +21,6 @@ WORKDIR /app
 
 RUN ["bun", "install"]
 
-COPY scripts .
+COPY scripts scripts
 
 CMD ["sleep", "infinity"]
