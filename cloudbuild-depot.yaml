@@ -7,6 +7,24 @@ steps:
       secretEnv:
           - DEPOT_TOKEN
           - GITHUB_TOKEN
+    - name: 'ghcr.io/depot/cli:latest'
+      args:
+          - build
+          - '--project'
+          - $_DEPOT_PROJECT_ID
+          - '--tag'
+          - 'dependencies:latest'
+          - '--file'
+          - 'dependencies.Dockerfile'
+          - '--load'
+          - '.'
+      id: Build dependencies
+      secretEnv:
+          - DEPOT_TOKEN
+    - name: 'dependencies:latest'
+      args:
+          - 'ls'
+          - '-la'
 
 substitutions:
     _IMAGE_TAG: '$COMMIT_SHA'
