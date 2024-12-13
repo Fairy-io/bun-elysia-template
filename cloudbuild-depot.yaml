@@ -14,10 +14,7 @@ steps:
 
     - name: 'deploy_utils:latest'
       dir: '/app'
-      args:
-          - 'bun'
-          - 'run'
-          - 'deploy'
+      script: 'bun run deploy'
       id: Deploy
       secretEnv:
           - GITHUB_TOKEN
