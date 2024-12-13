@@ -12,6 +12,21 @@ steps:
       secretEnv:
           - DEPOT_TOKEN
 
+    - name: 'ghcr.io/depot/cli:latest'
+      args:
+          - build
+          - '--project'
+          - $_DEPOT_PROJECT_ID
+          - '--tag'
+          - '$_IMAGE_NAME:$_IMAGE_TAG'
+          - '--load'
+          - '--target'
+          - 'prod'
+          - '.'
+      id: 'Build'
+      secretEnv:
+          - DEPOT_TOKEN
+
     - name: 'deploy_utils:latest'
       dir: '/app'
       script: 'bun run deploy'
@@ -20,6 +35,8 @@ steps:
           - GITHUB_TOKEN
       automapSubstitutions: true
 
+images:
+    - $_IMAGE_NAME:$_IMAGE_TAG
 
 substitutions:
     _IMAGE_TAG: '$COMMIT_SHA'
