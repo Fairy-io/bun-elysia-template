@@ -1,1 +1,1 @@
-console.log('deploy');
+console.log(process.env);

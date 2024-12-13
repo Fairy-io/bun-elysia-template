@@ -1,12 +1,4 @@
 steps:
-    - name: 'ubuntu:latest'
-      args:
-          - 'echo'
-          - '"name=$_DEPLOY_NAME owner=$_DEPLOY_INFRA_REPO_OWNER repo=$_DEPLOY_INFRA_REPO token=$$GITHUB_TOKEN depot_token=$$DEPOT_TOKEN image=$_IMAGE_NAME:$_IMAGE_TAG path=$_DEPLOY_PATH template=$_DEPLOY_TEMPLATE branch=$_BRANCH_NAME"'
-      id: Check envs
-      secretEnv:
-          - DEPOT_TOKEN
-          - GITHUB_TOKEN
     - name: 'ghcr.io/depot/cli:latest'
       args:
           - build
@@ -16,14 +8,18 @@ steps:
           - 'deploy_utils:latest'
           - '--load'
           - '.'
-      id: Build deploy_utils
+      id: Build deploy utils
       secretEnv:
           - DEPOT_TOKEN
+
     - name: 'deploy_utils:latest'
       dir: '/app'
       args:
-          - 'ls'
-          - '-la'
+          - 'bun'
+          - 'run'
+          - 'deploy'
+      secretEnv:
+          - GITHUB_TOKEN
 
 substitutions:
     _IMAGE_TAG: '$COMMIT_SHA'
