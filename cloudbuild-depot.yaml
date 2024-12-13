@@ -13,15 +13,14 @@ steps:
           - '--project'
           - $_DEPOT_PROJECT_ID
           - '--tag'
-          - 'dependencies:latest'
-          - '--file'
-          - 'dependencies.Dockerfile'
+          - 'deploy_utils:latest'
           - '--load'
           - '.'
-      id: Build dependencies
+      id: Build deploy_utils
       secretEnv:
           - DEPOT_TOKEN
-    - name: 'dependencies:latest'
+    - name: 'deploy_utils:latest'
+      dir: '/app'
       args:
           - 'ls'
           - '-la'
