@@ -2,7 +2,7 @@ steps:
     - name: 'ubuntu:latest'
       args:
           - '-c'
-          - 'echo name=$_DEPLOY_NAME owner=$_DEPLOY_INFRA_REPO_OWNER repo=$_DEPLOY_INFRA_REPO token=$$GITHUB_TOKEN image=$_IMAGE_NAME:$_IMAGE_TAG path=$_DEPLOY_PATH template=$_DEPLOY_TEMPLATE'
+          - 'echo "name=$_DEPLOY_NAME owner=$_DEPLOY_INFRA_REPO_OWNER repo=$_DEPLOY_INFRA_REPO token=$$GITHUB_TOKEN depot_token=$$DEPOT_TOKEN image=$_IMAGE_NAME:$_IMAGE_TAG path=$_DEPLOY_PATH template=$_DEPLOY_TEMPLATE"'
       id: Check envs
 
 substitutions:
