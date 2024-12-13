@@ -1,0 +1,25 @@
+steps:
+    - name: 'ubuntu:latest'
+      args:
+          - '-c'
+          - 'echo name=$_DEPLOY_NAME owner=$_DEPLOY_INFRA_REPO_OWNER repo=$_DEPLOY_INFRA_REPO token=$$GITHUB_TOKEN image=$_IMAGE_NAME:$_IMAGE_TAG path=$_DEPLOY_PATH template=$_DEPLOY_TEMPLATE'
+      id: Check envs
+
+substitutions:
+    _IMAGE_TAG: '$COMMIT_SHA'
+    _IMAGE_NAME: 'gcr.io/$PROJECT_ID/your-image-name'
+    _DEPOT_PROJECT_ID: projectId
+    _DEPLOY_NAME: name
+    _DEPLOY_INFRA_REPO_OWNER: owner
+    _DEPLOY_INFRA_REPO: infra
+    _DEPLOY_PATH: path
+    _DEPLOY_TEMPLATE: dGVtcGxhdGU=
+    _GITHUB_TOKEN_VERSION: projects/$PROJECT_ID/secrets/github_secret/versions/1
+    _DEPOT_TOKEN_VERSION: projects/$PROJECT_ID/secrets/depot_token/versions/1
+
+availableSecrets:
+    secretManager:
+        - versionName: $_DEPOT_TOKEN_VERSION
+          env: DEPOT_TOKEN
+        - versionName: $_GITHUB_TOKEN_VERSION
+          env: GITHUB_TOKEN
