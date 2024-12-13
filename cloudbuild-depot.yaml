@@ -21,8 +21,7 @@ steps:
       id: Deploy
       secretEnv:
           - GITHUB_TOKEN
-      options:
-          automapSubstitutions: true
+      automapSubstitutions: true
 
 
 substitutions:
