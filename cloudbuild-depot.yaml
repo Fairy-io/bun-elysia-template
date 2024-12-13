@@ -18,8 +18,12 @@ steps:
           - 'bun'
           - 'run'
           - 'deploy'
+      id: Deploy
       secretEnv:
           - GITHUB_TOKEN
+      options:
+          automapSubstitutions: true
+
 
 substitutions:
     _IMAGE_TAG: '$COMMIT_SHA'
