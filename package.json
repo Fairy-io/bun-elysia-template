@@ -3,7 +3,8 @@
     "version": "1.0.50",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "dev": "bun run --watch src/index.ts"
+        "dev": "bun run --watch src/index.ts",
+        "containerize": "docker build --target prod_dependencies --file dependencies.Dockerfile --tag elysia_prod_dependencies:latest . && docker build --tag elysia_app:latest ."
     },
     "dependencies": {
         "elysia": "latest"
