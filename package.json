@@ -8,10 +8,12 @@
         "deploy": "bun scripts/deploy/index.ts"
     },
     "dependencies": {
+        "@sinclair/typebox": "^0.34.11",
         "elysia": "latest"
     },
     "devDependencies": {
-        "bun-types": "latest"
+        "bun-types": "latest",
+        "github-api": "^3.4.0"
     },
     "module": "src/index.js"
 }
