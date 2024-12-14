@@ -37,7 +37,11 @@ const deploy = async () => {
 
     const image = `${_IMAGE_NAME}:${_IMAGE_TAG}`;
 
-    const deployment = _DEPLOY_TEMPLATE
+    const deployment = Buffer.from(
+        _DEPLOY_TEMPLATE,
+        'base64',
+    )
+        .toString()
         .replace(/\$name/g, _DEPLOY_NAME)
         .replace(/\$image/g, image)
         .replace(/\$branch/g, BRANCH_NAME);
