@@ -1,0 +1,63 @@
+steps:
+    - name: 'ghcr.io/depot/cli:latest'
+      args:
+          - build
+          - '--project'
+          - $_DEPOT_PROJECT_ID
+          - '--tag'
+          - 'deploy_utils:latest'
+          - '--load'
+          - '.'
+      id: Build deploy utils
+      secretEnv:
+          - DEPOT_TOKEN
+
+    - name: 'deploy_utils:latest'
+      dir: '/app'
+      script: 'bun test'
+      id: Test
+
+    - name: 'ghcr.io/depot/cli:latest'
+      args:
+          - build
+          - '--project'
+          - $_DEPOT_PROJECT_ID
+          - '--tag'
+          - '$_IMAGE_NAME:$_IMAGE_TAG'
+          - '--load'
+          - '--target'
+          - 'prod'
+          - '.'
+      id: Build
+      secretEnv:
+          - DEPOT_TOKEN
+
+    - name: 'deploy_utils:latest'
+      dir: '/app'
+      script: 'bun run deploy'
+      id: Deploy
+      secretEnv:
+          - GITHUB_TOKEN
+      automapSubstitutions: true
+
+images:
+    - $_IMAGE_NAME:$_IMAGE_TAG
+
+substitutions:
+    _IMAGE_TAG: '$COMMIT_SHA'
+    _IMAGE_NAME: 'gcr.io/$PROJECT_ID/your-image-name'
+    _DEPOT_PROJECT_ID: projectId
+    _DEPLOY_NAME: name
+    _DEPLOY_INFRA_REPO_OWNER: owner
+    _DEPLOY_INFRA_REPO: infra
+    _DEPLOY_PATH: path
+    _DEPLOY_TEMPLATE: dGVtcGxhdGU=
+    _GITHUB_TOKEN_VERSION: projects/$PROJECT_ID/secrets/github_secret/versions/1
+    _DEPOT_TOKEN_VERSION: projects/$PROJECT_ID/secrets/depot_token/versions/1
+
+availableSecrets:
+    secretManager:
+        - versionName: $_DEPOT_TOKEN_VERSION
+          env: DEPOT_TOKEN
+        - versionName: $_GITHUB_TOKEN_VERSION
+          env: GITHUB_TOKEN
