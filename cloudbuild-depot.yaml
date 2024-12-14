@@ -41,7 +41,6 @@ images:
 substitutions:
     _IMAGE_TAG: '$COMMIT_SHA'
     _IMAGE_NAME: 'gcr.io/$PROJECT_ID/your-image-name'
-    _BRANCH_NAME: '$BRANCH_NAME'
     _DEPOT_PROJECT_ID: projectId
     _DEPLOY_NAME: name
     _DEPLOY_INFRA_REPO_OWNER: owner
