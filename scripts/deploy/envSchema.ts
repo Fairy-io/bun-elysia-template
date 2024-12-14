@@ -9,6 +9,5 @@ export const envSchema = t.Object({
     _DEPLOY_PATH: t.String(),
     _DEPLOY_TEMPLATE: t.String(),
     BRANCH_NAME: t.String(),
+    GITHUB_TOKEN: t.String(),
 });
-
-export type EnvSchema = typeof envSchema.static;
