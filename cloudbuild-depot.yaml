@@ -12,6 +12,11 @@ steps:
       secretEnv:
           - DEPOT_TOKEN
 
+    - name: 'deploy_utils:latest'
+      dir: '/app'
+      script: 'bun test'
+      id: Test
+
     - name: 'ghcr.io/depot/cli:latest'
       args:
           - build
@@ -23,7 +28,7 @@ steps:
           - '--target'
           - 'prod'
           - '.'
-      id: 'Build'
+      id: Build
       secretEnv:
           - DEPOT_TOKEN
 
