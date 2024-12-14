@@ -44,7 +44,10 @@ const deploy = async () => {
         .toString()
         .replace(/\$name/g, _DEPLOY_NAME)
         .replace(/\$image/g, image)
-        .replace(/\$branch/g, BRANCH_NAME);
+        .replace(
+            /\$branch/g,
+            BRANCH_NAME.replace(/[\/_]/g, '-'),
+        );
 
     const filenameId = createHash('sha256')
         .update(BRANCH_NAME)
