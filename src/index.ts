@@ -1,6 +1,7 @@
 import { Elysia } from 'elysia';
 import { swagger } from '@elysiajs/swagger';
 import { config } from './config';
+import { CardsController } from './controllers';
 
 const app = new Elysia()
     .use(
@@ -16,7 +17,7 @@ const app = new Elysia()
             path: '/docs',
         }),
     )
-    .get('/', () => 'Hello Elysia')
+    .use(CardsController)
     .listen(config.PORT);
 
 console.log(
