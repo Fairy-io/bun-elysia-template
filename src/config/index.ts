@@ -9,7 +9,15 @@ const configSchema = t.Object({
     DOCUMENTATION_DESCRIPTION: t.Optional(t.String()),
 });
 
-export const config = validateObject(
+const optionalConfig = validateObject(
     parseIntObject(process.env),
     configSchema,
 );
+
+export const config: Required<typeof optionalConfig> = {
+    PORT: 3000,
+    DOCUMENTATION_TITLE: 'API',
+    DOCUMENTATION_VERSION: '0.0.0',
+    DOCUMENTATION_DESCRIPTION: 'Awesome API',
+    ...optionalConfig,
+};
