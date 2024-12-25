@@ -1,8 +1,10 @@
 import Elysia from 'elysia';
+import { ElysiaCommon } from '../common';
 
 export const CardsController = new Elysia({
     prefix: '/cards',
 })
+    .use(ElysiaCommon)
     .get('', async () => 'cards', {
         detail: { description: 'Get all cards' },
     })
