@@ -1,5 +1,4 @@
 import Elysia, { t } from 'elysia';
-import { ElysiaCustomStatusResponse } from 'elysia/dist/error';
 import { ElysiaCommon } from '../common';
 import { CardDto } from '../models/api/dto';
 import { CardModel } from '../models/api/response';
@@ -17,11 +16,8 @@ export const CardsController = new Elysia({
 
     .get(
         '',
-        async (): Promise<
-            | typeof CardsModel.static
-            | ElysiaCustomStatusResponse<any>
-        > => {
-            return [];
+        async ({ error: send }) => {
+            return send('OK', []);
         },
         {
             detail: { description: 'Get all cards' },
@@ -33,11 +29,8 @@ export const CardsController = new Elysia({
 
     .get(
         ':id',
-        async (): Promise<
-            | typeof CardModel.static
-            | ElysiaCustomStatusResponse<any>
-        > => {
-            return { name: '123' };
+        async ({ error: send }) => {
+            return send('OK', { name: '123' });
         },
         {
             detail: { description: 'Get card by id' },
@@ -47,15 +40,8 @@ export const CardsController = new Elysia({
 
     .post(
         '',
-        async ({
-            set,
-        }): Promise<
-            | typeof CardModel.static
-            | ElysiaCustomStatusResponse<any>
-        > => {
-            set.status = 'Created';
-
-            return { name: '123' };
+        async ({ error: send }) => {
+            return send('Created', { name: '123' });
         },
         {
             detail: { description: 'Create card' },
@@ -68,13 +54,8 @@ export const CardsController = new Elysia({
 
     .put(
         ':id',
-        async (): Promise<
-            | typeof CardModel.static
-            | ElysiaCustomStatusResponse<any>
-        > => {
-            return {
-                name: '123',
-            };
+        async ({ error: send }) => {
+            return send('OK', { name: '123' });
         },
         {
             detail: { description: 'Update card by id' },
@@ -87,10 +68,8 @@ export const CardsController = new Elysia({
 
     .delete(
         ':id',
-        async ({
-            set,
-        }): Promise<void | ElysiaCustomStatusResponse<any>> => {
-            set.status = 'No Content';
+        async ({ error: send }) => {
+            return send('No Content', 'No Content');
         },
         {
             detail: { description: 'Delete card by id' },
