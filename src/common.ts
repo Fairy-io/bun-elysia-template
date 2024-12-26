@@ -3,5 +3,9 @@
  */
 
 import Elysia from 'elysia';
+import { VoidModel } from './models/api/response';
 
-export const ElysiaCommon = new Elysia();
+export const ElysiaCommon = new Elysia().model(
+    'void',
+    VoidModel,
+);
