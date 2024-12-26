@@ -53,7 +53,7 @@ export const CardsController = new Elysia({
             | typeof CardModel.static
             | ElysiaCustomStatusResponse<any>
         > => {
-            set.status = 201;
+            set.status = 'Created';
 
             return { name: '123' };
         },
@@ -87,7 +87,11 @@ export const CardsController = new Elysia({
 
     .delete(
         ':id',
-        async (): Promise<void | ElysiaCustomStatusResponse<any>> => {},
+        async ({
+            set,
+        }): Promise<void | ElysiaCustomStatusResponse<any>> => {
+            set.status = 'No Content';
+        },
         {
             detail: { description: 'Delete card by id' },
             response: {
