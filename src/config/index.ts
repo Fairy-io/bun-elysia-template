@@ -10,14 +10,22 @@ const configSchema = t.Object({
 });
 
 const optionalConfig = validateObject(
-    parseIntObject(process.env),
+    parseIntObject({
+        ...process.env,
+        DOCUMENTATION_VERSION: process.env
+            .DOCUMENTATION_VERSION
+            ? `ver. ${process.env.DOCUMENTATION_VERSION}`
+            : undefined,
+    }),
     configSchema,
 );
 
 export const config: Required<typeof optionalConfig> = {
     PORT: 3000,
     DOCUMENTATION_TITLE: 'API',
-    DOCUMENTATION_VERSION: '0.0.0',
     DOCUMENTATION_DESCRIPTION: 'Awesome API',
     ...optionalConfig,
+    DOCUMENTATION_VERSION:
+        optionalConfig.DOCUMENTATION_VERSION ||
+        'ver. 0.0.0',
 };
