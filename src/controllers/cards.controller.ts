@@ -7,6 +7,7 @@ const CardsModel = t.Array(CardModel);
 
 export const CardsController = new Elysia({
     prefix: '/cards',
+    tags: ['Cards'],
 })
     .use(ElysiaCommon)
 
