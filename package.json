@@ -8,6 +8,7 @@
         "deploy": "bun scripts/deploy/index.ts"
     },
     "dependencies": {
+        "@elysiajs/swagger": "^1.2.0",
         "@sinclair/typebox": "^0.34.11",
         "elysia": "latest"
     },
