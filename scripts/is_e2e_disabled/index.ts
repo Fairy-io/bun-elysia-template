@@ -11,8 +11,6 @@
 
 const { IS_E2E_DISABLED } = process.env;
 
-console.log(IS_E2E_DISABLED);
-
 if (IS_E2E_DISABLED === 'false') {
     console.log('Running e2e tests');
 
