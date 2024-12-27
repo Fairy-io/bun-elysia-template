@@ -5,25 +5,34 @@ import { CardModel } from '../models/api/response';
 
 const CardsModel = t.Array(CardModel);
 
+const card: typeof CardModel.static = {
+    id: '123',
+    name: 'Name',
+    power: 5,
+    description: 'Description',
+    created_at: new Date(),
+    updated_at: new Date(),
+};
+
 export const CardsController = new Elysia({
     prefix: '/cards',
     tags: ['Cards'],
 })
     .use(ElysiaCommon)
 
-    .model('dto', CardDto)
-    .model('card', CardModel)
-    .model('cards', CardsModel)
+    .model('CardDto', CardDto)
+    .model('Card', CardModel)
+    .model('CardsList', CardsModel)
 
     .get(
         '',
         async ({ error: send }) => {
-            return send('OK', []);
+            return send('OK', [card]);
         },
         {
             detail: { description: 'Get all cards' },
             response: {
-                200: 'cards',
+                200: 'CardsList',
             },
         },
     )
@@ -31,24 +40,24 @@ export const CardsController = new Elysia({
     .get(
         ':id',
         async ({ error: send }) => {
-            return send('OK', { name: '123' });
+            return send('OK', card);
         },
         {
             detail: { description: 'Get card by id' },
-            response: { 200: 'card' },
+            response: { 200: 'Card' },
         },
     )
 
     .post(
         '',
         async ({ error: send }) => {
-            return send('Created', { name: '123' });
+            return send('Created', card);
         },
         {
             detail: { description: 'Create card' },
-            body: 'dto',
+            body: 'CardDto',
             response: {
-                201: 'card',
+                201: 'Card',
             },
         },
     )
@@ -56,13 +65,13 @@ export const CardsController = new Elysia({
     .put(
         ':id',
         async ({ error: send }) => {
-            return send('OK', { name: '123' });
+            return send('OK', card);
         },
         {
             detail: { description: 'Update card by id' },
-            body: 'dto',
+            body: 'CardDto',
             response: {
-                200: 'card',
+                200: 'Card',
             },
         },
     )
