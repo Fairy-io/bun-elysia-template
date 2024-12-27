@@ -59,7 +59,7 @@ substitutions:
     _DEPLOY_INFRA_REPO: infra
     _DEPLOY_PATH: path
     _DEPLOY_TEMPLATE: dGVtcGxhdGU=
-    _IS_E2E_DISABLED: 'true'
+    _IS_E2E_DISABLED: 'false'
     _GITHUB_TOKEN_VERSION: projects/$PROJECT_ID/secrets/github_secret/versions/1
     _DEPOT_TOKEN_VERSION: projects/$PROJECT_ID/secrets/depot_token/versions/1
 
