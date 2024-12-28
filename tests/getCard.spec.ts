@@ -20,7 +20,7 @@ describe('GET /card/:id (test)', () => {
     });
 
     afterEach(() => {
-        CardsProvider.fetchCards.mockReset();
+        CardsProvider.getCardById.mockReset();
     });
 
     it('returns card if exists', async () => {
@@ -37,15 +37,49 @@ describe('GET /card/:id (test)', () => {
             createCard(card),
         );
 
-        const response = await app
+        const { response, status } = await app
             .handle(
                 new Request('http://localhost/cards/123', {
                     method: 'get',
                 }),
             )
-            .then((res) => res.json());
+            .then(async (res) => ({
+                response: await res.json(),
+                status: res.status,
+            }));
 
         expect(response).toEqual(card);
+        expect(status).toBe(200);
+
+        expect(
+            CardsProvider.getCardById,
+        ).toHaveBeenCalledWith('123');
+    });
+
+    it('returns error if card does not exists', async () => {
+        CardsProvider.getCardById.mockReturnValue(null);
+
+        const { response, status } = await app
+            .handle(
+                new Request('http://localhost/cards/123', {
+                    method: 'get',
+                }),
+            )
+            .then(async (res) => ({
+                response: await res.json(),
+                status: res.status,
+            }));
+
+        expect(response).toEqual({
+            error: true,
+            code: 'NOT_FOUND',
+            details: {
+                id: '123',
+                type: 'card',
+            },
+        });
+
+        expect(status).toBe(404);
 
         expect(
             CardsProvider.getCardById,
