@@ -26,15 +26,19 @@ describe('GET /cards (test)', () => {
     it('returns empty array', async () => {
         CardsProvider.fetchCards.mockReturnValue([]);
 
-        const response = await app
+        const { response, status } = await app
             .handle(
                 new Request('http://localhost/cards', {
                     method: 'get',
                 }),
             )
-            .then((res) => res.json());
+            .then(async (res) => ({
+                response: await res.json(),
+                status: res.status,
+            }));
 
         expect(response).toEqual([]);
+        expect(status).toBe(200);
 
         expect(CardsProvider.fetchCards).toHaveBeenCalled();
     });
@@ -62,15 +66,19 @@ describe('GET /cards (test)', () => {
             cards.map(createCard),
         );
 
-        const response = await app
+        const { response, status } = await app
             .handle(
                 new Request('http://localhost/cards', {
                     method: 'get',
                 }),
             )
-            .then((res) => res.json());
+            .then(async (res) => ({
+                response: await res.json(),
+                status: res.status,
+            }));
 
         expect(response).toEqual(cards);
+        expect(status).toBe(200);
 
         expect(CardsProvider.fetchCards).toHaveBeenCalled();
     });
