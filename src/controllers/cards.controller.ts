@@ -1,9 +1,13 @@
 import Elysia, { t } from 'elysia';
 import { ElysiaCommon } from '../common';
 import { CardDto } from '../models/api/dto';
-import { CardModel } from '../models/api/response';
+import {
+    CardModel,
+    NotFoundErrorModel,
+} from '../models/api/response';
 
 const CardsModel = t.Array(CardModel);
+const CardNotFound = NotFoundErrorModel('card');
 
 const card: typeof CardModel.static = {
     id: '123',
@@ -23,6 +27,7 @@ export const CardsController = new Elysia({
     .model('CardDto', CardDto)
     .model('Card', CardModel)
     .model('CardsList', CardsModel)
+    .model('CardNotFound', CardNotFound)
 
     .get(
         '',
@@ -43,12 +48,27 @@ export const CardsController = new Elysia({
 
     .get(
         ':id',
-        async ({ error: send }) => {
+        async ({ error: send, inject, params: { id } }) => {
+            const cardsProvider = inject('CardsProvider');
+
+            const card = await cardsProvider.getCardById(
+                id,
+            );
+
+            if (!card) {
+                return send('Not Found', {
+                    error: true,
+                    code: 'NOT_FOUND',
+                    details: { id, type: 'card' },
+                });
+            }
+
             return send('OK', card);
         },
         {
             detail: { description: 'Get card by id' },
-            response: { 200: 'Card' },
+            params: t.Object({ id: t.String() }),
+            response: { 200: 'Card', 404: 'CardNotFound' },
         },
     )
 
