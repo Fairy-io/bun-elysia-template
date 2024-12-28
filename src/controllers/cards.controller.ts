@@ -26,8 +26,12 @@ export const CardsController = new Elysia({
 
     .get(
         '',
-        async ({ error: send }) => {
-            return send('OK', [card]);
+        async ({ error: send, inject }) => {
+            const cardsProvider = inject('CardsProvider');
+
+            const cards = await cardsProvider.fetchCards();
+
+            return send('OK', cards);
         },
         {
             detail: { description: 'Get all cards' },
