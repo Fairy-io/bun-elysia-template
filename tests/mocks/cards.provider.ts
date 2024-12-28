@@ -5,4 +5,5 @@ import { CardsProvider } from '../../src/providers';
 export class CardsProviderMock implements CardsProvider {
     public fetchCards = mock();
     public getCardById = mock();
+    public create = mock();
 }
