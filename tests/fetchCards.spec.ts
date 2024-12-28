@@ -7,6 +7,7 @@ import {
 } from 'bun:test';
 import { createApp } from '../src/createApp';
 import { CardsProviderMock } from './mocks/cards.provider';
+import { createCard } from './helpers/createCard';
 
 describe('GET /cards (test)', () => {
     let app: ReturnType<typeof createApp>;
@@ -45,27 +46,21 @@ describe('GET /cards (test)', () => {
                 name: 'Name',
                 power: 5,
                 description: 'Description',
-                created_at: new Date(
-                    '2024-12-28T10:59:23.489Z',
-                ),
-                updated_at: new Date(
-                    '2024-12-28T10:59:23.489Z',
-                ),
+                created_at: '2024-12-28T10:59:23.489Z',
+                updated_at: '2024-12-28T10:59:23.489Z',
             },
             {
                 id: '456',
                 name: 'Name2',
                 power: 10,
-                created_at: new Date(
-                    '2024-12-28T10:59:23.489Z',
-                ),
-                updated_at: new Date(
-                    '2024-12-28T10:59:23.489Z',
-                ),
+                created_at: '2024-12-28T10:59:23.489Z',
+                updated_at: '2024-12-28T10:59:23.489Z',
             },
         ];
 
-        CardsProvider.fetchCards.mockReturnValue(cards);
+        CardsProvider.fetchCards.mockReturnValue(
+            cards.map(createCard),
+        );
 
         const response = await app
             .handle(
@@ -75,13 +70,7 @@ describe('GET /cards (test)', () => {
             )
             .then((res) => res.json());
 
-        expect(response).toEqual(
-            cards.map((card) => ({
-                ...card,
-                created_at: card.created_at.toISOString(),
-                updated_at: card.updated_at.toISOString(),
-            })),
-        );
+        expect(response).toEqual(cards);
 
         expect(CardsProvider.fetchCards).toHaveBeenCalled();
     });
