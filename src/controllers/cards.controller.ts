@@ -74,7 +74,11 @@ export const CardsController = new Elysia({
 
     .post(
         '',
-        async ({ error: send }) => {
+        async ({ error: send, inject, body }) => {
+            const cardsProvider = inject('CardsProvider');
+
+            const card = await cardsProvider.create(body);
+
             return send('Created', card);
         },
         {
