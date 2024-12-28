@@ -2,6 +2,7 @@
  * helper method for constructing cards
  * card model is expecting created_at and updated_at to be a dates
  * but api returns strings
+ * also it should be returned as a promise, because providers usually returns promises
  *
  * So we want to do like this:
  *
@@ -20,12 +21,12 @@
 
 import { CardModel } from '../../src/models/api/response';
 
-export const createCard = (
+export const createCard = async (
     cardData: Omit<
         typeof CardModel.static,
         'created_at' | 'updated_at'
     > & { created_at: string; updated_at: string },
-): typeof CardModel.static => {
+): Promise<typeof CardModel.static> => {
     return {
         ...cardData,
         created_at: new Date(cardData.created_at),

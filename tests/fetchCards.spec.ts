@@ -63,7 +63,7 @@ describe('GET /cards (test)', () => {
         ];
 
         CardsProvider.fetchCards.mockReturnValue(
-            cards.map(createCard),
+            Promise.all(cards.map(createCard)),
         );
 
         const { response, status } = await app
