@@ -45,15 +45,23 @@ describe('GET /cards (test)', () => {
                 name: 'Name',
                 power: 5,
                 description: 'Description',
-                created_at: '2024-12-28T10:59:23.489Z',
-                updated_at: '2024-12-28T10:59:23.489Z',
+                created_at: new Date(
+                    '2024-12-28T10:59:23.489Z',
+                ),
+                updated_at: new Date(
+                    '2024-12-28T10:59:23.489Z',
+                ),
             },
             {
                 id: '456',
                 name: 'Name2',
                 power: 10,
-                created_at: '2024-12-28T10:59:23.489Z',
-                updated_at: '2024-12-28T10:59:23.489Z',
+                created_at: new Date(
+                    '2024-12-28T10:59:23.489Z',
+                ),
+                updated_at: new Date(
+                    '2024-12-28T10:59:23.489Z',
+                ),
             },
         ];
 
@@ -67,7 +75,13 @@ describe('GET /cards (test)', () => {
             )
             .then((res) => res.json());
 
-        expect(response).toEqual(cards);
+        expect(response).toEqual(
+            cards.map((card) => ({
+                ...card,
+                created_at: card.created_at.toISOString(),
+                updated_at: card.updated_at.toISOString(),
+            })),
+        );
 
         expect(CardsProvider.fetchCards).toHaveBeenCalled();
     });
