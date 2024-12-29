@@ -29,6 +29,28 @@ export const InvalidPayloadModel = t.Object({
                     t.Literal('INVALID_NUMBER'),
                 ]),
             }),
+            {
+                examples: [
+                    [
+                        {
+                            name: 'name',
+                            code: 'NOT_PROVIDED',
+                        },
+                        {
+                            name: 'name',
+                            code: 'INVALID_STRING',
+                        },
+                        {
+                            name: 'power',
+                            code: 'NOT_PROVIDED',
+                        },
+                        {
+                            name: 'power',
+                            code: 'INVALID_NUMBER',
+                        },
+                    ],
+                ],
+            },
         ),
     }),
 });
