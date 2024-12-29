@@ -1,6 +1,7 @@
 import { Elysia } from 'elysia';
 import { swagger } from '@elysiajs/swagger';
 import { config } from './config';
+import { onError } from './onError';
 import { CardsController } from './controllers';
 import { provide } from './utils/di';
 import { CardsProvider } from './providers';
@@ -17,6 +18,7 @@ export const createApp = (di: Partial<DiStore> = {}) => {
     provide({ ...defaultDiStore, ...di });
 
     return new Elysia()
+        .use(onError)
         .use(
             swagger({
                 documentation: {
