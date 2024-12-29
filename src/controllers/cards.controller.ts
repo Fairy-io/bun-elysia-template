@@ -86,6 +86,7 @@ export const CardsController = new Elysia({
             body: 'CardDto',
             response: {
                 201: 'Card',
+                400: 'InvalidPayload',
             },
         },
     )
@@ -100,6 +101,7 @@ export const CardsController = new Elysia({
             body: 'CardDto',
             response: {
                 200: 'Card',
+                400: 'InvalidPayload',
             },
         },
     )
@@ -112,7 +114,7 @@ export const CardsController = new Elysia({
         {
             detail: { description: 'Delete card by id' },
             response: {
-                204: 'void',
+                204: 'Void',
             },
         },
     );

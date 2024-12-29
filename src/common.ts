@@ -3,12 +3,16 @@
  */
 
 import Elysia from 'elysia';
-import { VoidModel } from './models/api/response';
+import {
+    InvalidPayloadModel,
+    VoidModel,
+} from './models/api/response';
 import { inject } from './utils/di';
 
 export const ElysiaCommon = new Elysia({
     name: 'common',
 })
-    .model('void', VoidModel)
+    .model('Void', VoidModel)
+    .model('InvalidPayload', InvalidPayloadModel)
 
     .decorate('inject', inject);
