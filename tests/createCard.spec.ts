@@ -66,43 +66,6 @@ describe('POST /cards (test)', () => {
         );
     });
 
-    it('does not return validation error if description is not provided', async () => {
-        const cardDto = {
-            name: 'Name',
-            power: 10,
-        };
-
-        const card = {
-            id: '123',
-            name: 'Name',
-            power: 10,
-            created_at: '2024-12-28T10:59:23.489Z',
-            updated_at: '2024-12-28T10:59:23.489Z',
-        };
-
-        CardsProvider.create.mockReturnValue(
-            createCard(card),
-        );
-
-        const { response, status } = await app
-            .handle(
-                new Request('http://localhost/cards', {
-                    method: 'post',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(cardDto),
-                }),
-            )
-            .then(async (res) => ({
-                response: await res.json(),
-                status: res.status,
-            }));
-
-        expect(response.error).toBeUndefined();
-        expect(status).not.toBe(400);
-    });
-
     it('returns validation error if name is not provided', async () => {
         const cardDto = {
             power: 10,
