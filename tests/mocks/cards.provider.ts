@@ -6,4 +6,5 @@ export class CardsProviderMock implements CardsProvider {
     public fetchAll = mock();
     public getById = mock();
     public create = mock();
+    public update = mock();
 }

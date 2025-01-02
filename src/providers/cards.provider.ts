@@ -34,4 +34,12 @@ export class CardsProvider {
             updated_at: new Date(),
         };
     }
+
+    async update(id: string, dto: Dto): Promise<Card> {
+        return {
+            ...card,
+            ...dto,
+            id,
+        };
+    }
 }
