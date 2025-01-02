@@ -39,4 +39,6 @@ export class CardsProvider {
             id,
         };
     }
+
+    async delete(_id: string): Promise<void> {}
 }

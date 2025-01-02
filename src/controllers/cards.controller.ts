@@ -122,11 +122,16 @@ export const CardsController = new Elysia({
 
     .delete(
         ':id',
-        async ({ error: send }) => {
+        async ({ error: send, inject, params: { id } }) => {
+            const cardsProvider = inject('CardsProvider');
+
+            await cardsProvider.delete(id);
+
             return send('No Content', 'No Content');
         },
         {
             detail: { description: 'Delete card by id' },
+            params: t.Object({ id: t.String() }),
             response: {
                 204: 'Void',
             },
