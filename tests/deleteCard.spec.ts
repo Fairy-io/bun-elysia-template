@@ -34,7 +34,7 @@ describe('DELETE /cards/:id (test)', () => {
                 status: res.status,
             }));
 
-        expect(response).toBe('No Content');
+        expect(response).toBe('');
         expect(status).toBe(204);
 
         expect(CardsProvider.delete).toHaveBeenCalledWith(

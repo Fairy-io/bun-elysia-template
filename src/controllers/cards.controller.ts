@@ -127,7 +127,7 @@ export const CardsController = new Elysia({
 
             await cardsProvider.delete(id);
 
-            return send('No Content', 'No Content');
+            return send('No Content', '');
         },
         {
             detail: { description: 'Delete card by id' },
