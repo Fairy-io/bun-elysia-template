@@ -9,15 +9,6 @@ import {
 const CardsModel = t.Array(CardModel);
 const CardNotFound = NotFoundErrorModel('card');
 
-const card: typeof CardModel.static = {
-    id: '123',
-    name: 'Name',
-    power: 5,
-    description: 'Description',
-    created_at: new Date(),
-    updated_at: new Date(),
-};
-
 export const CardsController = new Elysia({
     prefix: '/cards',
     tags: ['Cards'],
@@ -91,15 +82,40 @@ export const CardsController = new Elysia({
 
     .put(
         ':id',
-        async ({ error: send }) => {
+        async ({
+            error: send,
+            inject,
+            params: { id },
+            body,
+        }) => {
+            const cardsProvider = inject('CardsProvider');
+
+            const existingCard =
+                await cardsProvider.getById(id);
+
+            if (!existingCard) {
+                return send('Not Found', {
+                    error: true,
+                    code: 'NOT_FOUND',
+                    details: { id, type: 'card' },
+                });
+            }
+
+            const card = await cardsProvider.update(
+                id,
+                body,
+            );
+
             return send('OK', card);
         },
         {
             detail: { description: 'Update card by id' },
             body: 'CardDto',
+            params: t.Object({ id: t.String() }),
             response: {
                 200: 'Card',
                 400: 'InvalidPayload',
+                404: 'CardNotFound',
             },
         },
     )
