@@ -20,7 +20,7 @@ describe('GET /card/:id (test)', () => {
     });
 
     afterEach(() => {
-        CardsProvider.getCardById.mockReset();
+        CardsProvider.getById.mockReset();
     });
 
     it('returns card if exists', async () => {
@@ -33,7 +33,7 @@ describe('GET /card/:id (test)', () => {
             updated_at: '2024-12-28T10:59:23.489Z',
         };
 
-        CardsProvider.getCardById.mockReturnValue(
+        CardsProvider.getById.mockReturnValue(
             createCard(card),
         );
 
@@ -51,13 +51,13 @@ describe('GET /card/:id (test)', () => {
         expect(response).toEqual(card);
         expect(status).toBe(200);
 
-        expect(
-            CardsProvider.getCardById,
-        ).toHaveBeenCalledWith('123');
+        expect(CardsProvider.getById).toHaveBeenCalledWith(
+            '123',
+        );
     });
 
     it('returns error if card does not exists', async () => {
-        CardsProvider.getCardById.mockReturnValue(null);
+        CardsProvider.getById.mockReturnValue(null);
 
         const { response, status } = await app
             .handle(
@@ -81,8 +81,8 @@ describe('GET /card/:id (test)', () => {
 
         expect(status).toBe(404);
 
-        expect(
-            CardsProvider.getCardById,
-        ).toHaveBeenCalledWith('123');
+        expect(CardsProvider.getById).toHaveBeenCalledWith(
+            '123',
+        );
     });
 });

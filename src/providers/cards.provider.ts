@@ -14,11 +14,11 @@ const card: Card = {
 };
 
 export class CardsProvider {
-    async fetchCards(): Promise<Card[]> {
+    async fetchAll(): Promise<Card[]> {
         return [card];
     }
 
-    async getCardById(id: string): Promise<Card | null> {
+    async getById(id: string): Promise<Card | null> {
         if (id !== '123') {
             return null;
         }

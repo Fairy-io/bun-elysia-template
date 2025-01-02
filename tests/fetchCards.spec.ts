@@ -20,11 +20,11 @@ describe('GET /cards (test)', () => {
     });
 
     afterEach(() => {
-        CardsProvider.fetchCards.mockReset();
+        CardsProvider.fetchAll.mockReset();
     });
 
     it('returns empty array', async () => {
-        CardsProvider.fetchCards.mockReturnValue([]);
+        CardsProvider.fetchAll.mockReturnValue([]);
 
         const { response, status } = await app
             .handle(
@@ -40,7 +40,7 @@ describe('GET /cards (test)', () => {
         expect(response).toEqual([]);
         expect(status).toBe(200);
 
-        expect(CardsProvider.fetchCards).toHaveBeenCalled();
+        expect(CardsProvider.fetchAll).toHaveBeenCalled();
     });
 
     it('returns cards', async () => {
@@ -62,7 +62,7 @@ describe('GET /cards (test)', () => {
             },
         ];
 
-        CardsProvider.fetchCards.mockReturnValue(
+        CardsProvider.fetchAll.mockReturnValue(
             Promise.all(cards.map(createCard)),
         );
 
@@ -80,6 +80,6 @@ describe('GET /cards (test)', () => {
         expect(response).toEqual(cards);
         expect(status).toBe(200);
 
-        expect(CardsProvider.fetchCards).toHaveBeenCalled();
+        expect(CardsProvider.fetchAll).toHaveBeenCalled();
     });
 });

@@ -34,7 +34,7 @@ export const CardsController = new Elysia({
         async ({ error: send, inject }) => {
             const cardsProvider = inject('CardsProvider');
 
-            const cards = await cardsProvider.fetchCards();
+            const cards = await cardsProvider.fetchAll();
 
             return send('OK', cards);
         },
@@ -51,9 +51,7 @@ export const CardsController = new Elysia({
         async ({ error: send, inject, params: { id } }) => {
             const cardsProvider = inject('CardsProvider');
 
-            const card = await cardsProvider.getCardById(
-                id,
-            );
+            const card = await cardsProvider.getById(id);
 
             if (!card) {
                 return send('Not Found', {
