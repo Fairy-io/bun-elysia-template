@@ -14,8 +14,15 @@ steps:
 
     - name: 'deploy_utils:latest'
       dir: '/app'
-      script: 'bun test'
+      script: 'bun tests'
       id: Test
+
+    - name: 'deploy_utils:latest'
+      dir: '/app'
+      script: 'bun e2e'
+      id: e2e Test
+      env:
+          - 'IS_E2E_DISABLED=${_IS_E2E_DISABLED}'
 
     - name: 'ghcr.io/depot/cli:latest'
       args:
@@ -52,6 +59,7 @@ substitutions:
     _DEPLOY_INFRA_REPO: infra
     _DEPLOY_PATH: path
     _DEPLOY_TEMPLATE: dGVtcGxhdGU=
+    _IS_E2E_DISABLED: 'true'
     _GITHUB_TOKEN_VERSION: projects/$PROJECT_ID/secrets/github_secret/versions/1
     _DEPOT_TOKEN_VERSION: projects/$PROJECT_ID/secrets/depot_token/versions/1
 

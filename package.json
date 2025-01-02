@@ -2,10 +2,13 @@
     "name": "app",
     "version": "1.0.50",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
         "dev": "bun run --watch src/index.ts",
         "containerize": "docker build --target prod --tag elysia_app:latest .",
-        "deploy": "bun scripts/deploy/index.ts"
+        "deploy": "bun scripts/deploy/index.ts",
+        "tests": "bun test -t test",
+        "tests:watch": "bun test -t test --watch",
+        "e2e": "bun scripts/is_e2e_disabled/index.ts || bun test -t e2e",
+        "e2e:watch": "bun test -t e2e --watch"
     },
     "dependencies": {
         "@elysiajs/swagger": "^1.2.0",

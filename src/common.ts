@@ -1,10 +1,18 @@
 /**
- * This is common Elysia configuration which can be used for all controlelrs
+ * This is common Elysia configuration which can be used for all controllers
  */
 
 import Elysia from 'elysia';
-import { VoidModel } from './models/api/response';
+import {
+    InvalidPayloadSchema,
+    VoidSchema,
+} from './models/api/response';
+import { inject } from './utils/di';
 
 export const ElysiaCommon = new Elysia({
     name: 'common',
-}).model('void', VoidModel);
+})
+    .model('Void', VoidSchema)
+    .model('InvalidPayload', InvalidPayloadSchema)
+
+    .decorate('inject', inject);
