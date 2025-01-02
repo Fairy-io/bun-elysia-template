@@ -1,8 +1,5 @@
 import { CardDto } from '../models/api/dto';
-import { CardModel } from '../models/api/response';
-
-type Card = typeof CardModel.static;
-type Dto = typeof CardDto.static;
+import { Card } from '../models/api/response';
 
 const card: Card = {
     id: '123',
@@ -26,7 +23,7 @@ export class CardsProvider {
         return card;
     }
 
-    async create(dto: Dto): Promise<Card> {
+    async create(dto: CardDto): Promise<Card> {
         return {
             ...dto,
             id: '456',
@@ -35,7 +32,7 @@ export class CardsProvider {
         };
     }
 
-    async update(id: string, dto: Dto): Promise<Card> {
+    async update(id: string, dto: CardDto): Promise<Card> {
         return {
             ...card,
             ...dto,

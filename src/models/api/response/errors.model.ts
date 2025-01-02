@@ -1,6 +1,6 @@
 import { t } from 'elysia';
 
-export const NotFoundErrorModel = <T extends string>(
+export const NotFoundErrorSchema = <T extends string>(
     type: T,
 ) =>
     t.Object({
@@ -14,7 +14,7 @@ export const NotFoundErrorModel = <T extends string>(
         }),
     });
 
-export const InvalidPayloadModel = t.Object({
+export const InvalidPayloadSchema = t.Object({
     error: t.Literal(true),
     code: t.Literal('INVALID_PAYLOAD', {
         examples: ['INVALID_PAYLOAD'],
@@ -54,3 +54,9 @@ export const InvalidPayloadModel = t.Object({
         ),
     }),
 });
+
+export type InvalidPayload =
+    typeof InvalidPayloadSchema.static;
+
+export type InvalidPayloadFieldCode =
+    InvalidPayload['details']['fields'][number]['code'];

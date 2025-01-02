@@ -1,11 +1,14 @@
 import Elysia from 'elysia';
-import { InvalidPayloadModel } from './models/api/response';
+import {
+    InvalidPayload,
+    InvalidPayloadFieldCode,
+} from './models/api/response';
 
-type Errors = typeof InvalidPayloadModel.static;
+type CustomError = InvalidPayload;
 
 export const onError = new Elysia().onError(
     { as: 'global' },
-    ({ code, error, set }): Errors | void => {
+    ({ code, error, set }): CustomError | void => {
         if (code === 'VALIDATION') {
             set.status = 'Bad Request';
 
@@ -53,7 +56,7 @@ export const onError = new Elysia().onError(
                             }
 
                             // default code is 'NOT_PROVIDED'
-                            let code: (typeof InvalidPayloadModel.static)['details']['fields'][number]['code'] =
+                            let code: InvalidPayloadFieldCode =
                                 'NOT_PROVIDED';
 
                             // we check summaries for determine what correct code should be

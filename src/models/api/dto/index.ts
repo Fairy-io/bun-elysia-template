@@ -1,1 +1,3 @@
-export { CardDto } from './card.dto';
+export { CardDtoSchema } from './card.dto';
+
+export type { CardDto } from './card.dto';

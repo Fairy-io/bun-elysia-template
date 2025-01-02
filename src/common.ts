@@ -4,15 +4,15 @@
 
 import Elysia from 'elysia';
 import {
-    InvalidPayloadModel,
-    VoidModel,
+    InvalidPayloadSchema,
+    VoidSchema,
 } from './models/api/response';
 import { inject } from './utils/di';
 
 export const ElysiaCommon = new Elysia({
     name: 'common',
 })
-    .model('Void', VoidModel)
-    .model('InvalidPayload', InvalidPayloadModel)
+    .model('Void', VoidSchema)
+    .model('InvalidPayload', InvalidPayloadSchema)
 
     .decorate('inject', inject);

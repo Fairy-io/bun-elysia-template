@@ -1,13 +1,13 @@
 import Elysia, { t } from 'elysia';
 import { ElysiaCommon } from '../common';
-import { CardDto } from '../models/api/dto';
+import { CardDtoSchema } from '../models/api/dto';
 import {
-    CardModel,
-    NotFoundErrorModel,
+    CardSchema,
+    NotFoundErrorSchema,
 } from '../models/api/response';
 
-const CardsModel = t.Array(CardModel);
-const CardNotFound = NotFoundErrorModel('card');
+const CardsSchema = t.Array(CardSchema);
+const CardNotFoundSchema = NotFoundErrorSchema('card');
 
 export const CardsController = new Elysia({
     prefix: '/cards',
@@ -15,10 +15,10 @@ export const CardsController = new Elysia({
 })
     .use(ElysiaCommon)
 
-    .model('CardDto', CardDto)
-    .model('Card', CardModel)
-    .model('CardsList', CardsModel)
-    .model('CardNotFound', CardNotFound)
+    .model('CardDto', CardDtoSchema)
+    .model('Card', CardSchema)
+    .model('CardsList', CardsSchema)
+    .model('CardNotFound', CardNotFoundSchema)
 
     .get(
         '',

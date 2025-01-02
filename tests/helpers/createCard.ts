@@ -19,14 +19,14 @@
  * expect(response).toEqual(card)
  */
 
-import { CardModel } from '../../src/models/api/response';
+import { Card } from '../../src/models/api/response';
 
 export const createCard = async (
-    cardData: Omit<
-        typeof CardModel.static,
-        'created_at' | 'updated_at'
-    > & { created_at: string; updated_at: string },
-): Promise<typeof CardModel.static> => {
+    cardData: Omit<Card, 'created_at' | 'updated_at'> & {
+        created_at: string;
+        updated_at: string;
+    },
+): Promise<Card> => {
     return {
         ...cardData,
         created_at: new Date(cardData.created_at),
