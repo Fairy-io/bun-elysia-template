@@ -377,3 +377,11 @@ sequenceDiagram
 -   [Google Cloud Platform](https://cloud.google.com/gcp?hl=en)
 -   [Google Cloud Build](https://cloud.google.com/build?hl=en)
 -   [Gitops Patterns](https://about.gitlab.com/topics/gitops/)
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for more information.
+
+## License
+
+See [LICENSE](LICENSE) for more information.

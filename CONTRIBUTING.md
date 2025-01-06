@@ -1,4 +1,4 @@
-# Contributors
+# Contributing
 
 Thank you to all the people who have contributed to this project!
 
@@ -10,7 +10,7 @@ Thank you to all the people who have contributed to this project!
 
 -   ...
 
-To contribute to this project:
+## To contribute to this project
 
 1. Fork the repository
 2. Create a new branch for your feature/fix
