@@ -21,6 +21,8 @@ As the example TCG (Trading Card Game) cards were used. Each card has following 
 
 `name`, `power` and `description` are passed from the client.
 
+This template is designed for rapid development of APIs using ElysiaJS and Bun, featuring a simple CRUD example to help you get started.
+
 Template is deployed and available at [bun-elysia-template.magicfe.net/docs](https://bun-elysia-template.magicfe.net/docs).
 
 It does not use any database, but it is possible to add one. API respond with dummy data.
