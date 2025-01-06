@@ -184,6 +184,10 @@ new Elysia().get(
 
 It uses `validateObject` and `parseIntObject` functions to parse and validate environment variables. In current setup every environment variable should have value assigned, so it is required to provide default values for optional environment variables.
 
+Configuration is stored in `src/config/index.ts` file.
+
+To get started, create `.env` file based on `.env.example`.
+
 ### `controllers`
 
 Route definitions and handlers.
@@ -315,3 +319,29 @@ Application deployment uses [Gitops](https://about.gitlab.com/topics/gitops/). `
 -   `_IS_E2E_DISABLED`: tells if e2e tests are disabled (default `'true'`). It should be a string, not boolean
 -   `_GITHUB_TOKEN_VERSION`: secret version from google secret manager which stores Github token
 -   `_DEPOT_TOKEN_VERSION`: secret version from google secret manager which stores Depot token
+
+## Deployment Sequence
+
+```mermaid
+sequenceDiagram
+    participant A as Developer
+    participant B as Application repository
+    participant C as Google Cloud Build
+    participant D as Terraform Cloud
+    participant E as Infrastructure repository
+
+    A->>B: Push changes
+    B->>C: Trigger build
+    C->>C: Run tests
+    C->>C: Build container
+    C->>E: Create deployment file
+    E->>D: Trigger deployment
+```
+
+## Useful Links
+
+-   [ElysiaJS](https://elysiajs.com)
+-   [Depot.dev](https://depot.dev)
+-   [Google Cloud Platform](https://cloud.google.com/gcp?hl=en)
+-   [Google Cloud Build](https://cloud.google.com/build?hl=en)
+-   [Gitops Patterns](https://about.gitlab.com/topics/gitops/)
