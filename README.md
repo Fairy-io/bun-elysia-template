@@ -21,6 +21,11 @@ As the example TCG (Trading Card Game) cards were used. Each card has following 
 
 `name`, `power` and `description` are passed from the client.
 
+Template is deployed and available at [bun-elysia-template.magicfe.net/docs](https://bun-elysia-template.magicfe.net/docs).
+
+It does not use any database, but it is possible to add one. API respond with dummy data.
+We can trigger `404` error for get card by id and update card by id by sending invalid id (any other than `123`).
+
 ## Prerequisites
 
 1. Bun installed: `curl -fsSL https://bun.sh/install | bash`
@@ -87,6 +92,31 @@ Then we can run:
 -   `bun test -t e2e` - this will run only tests inside `file2.spec.ts`, because top level describe contains `e2e` substring
 
 This is useful, because sometimes we want to run only normal tests using mocks, but sometimes we want to run e2e tests using real database connections. This pattern allows us to select which tests are running.
+
+### Testing with mocks
+
+If we want to run tests without real database or other dependencies, we can use mocks. We can create mocks for every provider and then use them in tests. We use `mock` function from `bun:test` to create mocks (stored in `tests/mocks` directory).
+
+In Typescript class is also its own interface, so we can use it to create mocks like this:
+
+```ts
+import { mock } from 'bun:test';
+import { CardsProvider } from '../../src/providers';
+
+export class CardsProviderMock implements CardsProvider {
+    public fetchAll = mock();
+    public getById = mock();
+    public create = mock();
+    public update = mock();
+    public delete = mock();
+}
+```
+
+These kind of tests are meant to be fast and simple and they don't need any additional testing setup.
+
+### Testing with real database or other dependencies (e2e)
+
+If we want to be sure that our application works with real database or other dependencies, we can run e2e tests.
 
 ## `src` directory structure
 
