@@ -23,11 +23,10 @@ export const createApp = (di: Partial<DiStore> = {}) => {
             swagger({
                 documentation: {
                     info: {
-                        title: config.DOCUMENTATION_TITLE,
-                        version:
-                            config.DOCUMENTATION_VERSION,
+                        title: config.SERVICE_NAME,
+                        version: config.SERVICE_VERSION,
                         description:
-                            config.DOCUMENTATION_DESCRIPTION,
+                            config.SERVICE_DESCRIPTION,
                     },
                 },
                 path: '/docs',
