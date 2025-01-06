@@ -4,17 +4,16 @@ import { parseIntObject } from '../utils/parseIntObject';
 
 const configSchema = t.Object({
     PORT: t.Optional(t.Numeric()),
-    DOCUMENTATION_TITLE: t.Optional(t.String()),
-    DOCUMENTATION_VERSION: t.Optional(t.String()),
-    DOCUMENTATION_DESCRIPTION: t.Optional(t.String()),
+    SERVICE_NAME: t.Optional(t.String()),
+    SERVICE_VERSION: t.Optional(t.String()),
+    SERVICE_DESCRIPTION: t.Optional(t.String()),
 });
 
 const optionalConfig = validateObject(
     parseIntObject({
         ...process.env,
-        DOCUMENTATION_VERSION: process.env
-            .DOCUMENTATION_VERSION
-            ? `ver. ${process.env.DOCUMENTATION_VERSION}`
+        SERVICE_VERSION: process.env.SERVICE_VERSION
+            ? `ver. ${process.env.SERVICE_VERSION}`
             : undefined,
     }),
     configSchema,
@@ -22,10 +21,9 @@ const optionalConfig = validateObject(
 
 export const config: Required<typeof optionalConfig> = {
     PORT: 3000,
-    DOCUMENTATION_TITLE: 'API',
-    DOCUMENTATION_DESCRIPTION: 'Awesome API',
+    SERVICE_NAME: 'API',
+    SERVICE_DESCRIPTION: 'Awesome API',
     ...optionalConfig,
-    DOCUMENTATION_VERSION:
-        optionalConfig.DOCUMENTATION_VERSION ||
-        'ver. 0.0.0',
+    SERVICE_VERSION:
+        optionalConfig.SERVICE_VERSION || 'ver. 0.0.0',
 };
