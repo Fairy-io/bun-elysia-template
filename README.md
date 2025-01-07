@@ -35,6 +35,40 @@ We can trigger `401` error for create card by sending invalid user role (any oth
 
 1. Bun installed: `curl -fsSL https://bun.sh/install | bash`
 
+## Getting Started
+
+1. Click on "Use Template" green button or use terraform to create new repository as follows:
+
+```terraform
+terraform {
+    required_providers {
+        github = {
+            source = "integrations/github"
+            version = "~> 5.0"
+        }
+    }
+
+    resource "github_repository" "repo" {
+        name = "your-repository-name"
+        template {
+            owner                = "Fairy-io"
+            repository           = "bun-elysia-template"
+            include_all_branches = false
+        }
+    }
+}
+```
+
+2. Clone repository `git clone https://github.com/your-user-name-or-organization-name/your-repository-name.git` (or use ssh)
+
+Don't forget to replace `your-user-name-or-organization-name/your-repository-name` with your github username or organization name and repository name
+
+3. Cd into repository `cd your-repository-name` (use your real repository name)
+
+4. Install dependencies running `bun install`
+
+5. Run `bun dev` to start application
+
 ## Commands
 
 ```bash
