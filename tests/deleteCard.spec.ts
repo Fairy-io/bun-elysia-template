@@ -8,7 +8,7 @@ import {
 import { createApp } from '../src/createApp';
 import { CardsProviderMock } from './mocks/cards.provider';
 
-describe('DELETE /cards/:id (test)', () => {
+describe('DELETE /cards/:id', () => {
     let app: ReturnType<typeof createApp>;
     let CardsProvider: CardsProviderMock;
 

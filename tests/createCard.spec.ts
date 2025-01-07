@@ -9,7 +9,7 @@ import { createApp } from '../src/createApp';
 import { CardsProviderMock } from './mocks/cards.provider';
 import { createCard } from './helpers/createCard';
 
-describe('POST /cards (test)', () => {
+describe('POST /cards', () => {
     let app: ReturnType<typeof createApp>;
     let CardsProvider: CardsProviderMock;
 

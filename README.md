@@ -66,32 +66,33 @@ bun e2e:watch # run e2e tests in watch mode
 
 `bun test` will run all tests suites (e.g. `*.spec.ts` files, `*.test.ts` files, etc.).
 
-But if it is not what we want, we can select tests for run.
+To separate unit tests from end-to-end tests, we organize them into different directories:
 
-Consider following examples:
+-   Unit tests are placed in the `tests/` directory
+-   End-to-end tests are placed in the `tests_e2e/` directory
 
 ```ts
-// file1.spec.ts
+// ./tests/file1.spec.ts
 
 import { describe, it } from 'bun:test';
 
-describe('something (test)', () => {
+describe('something', () => {
     it('something', () => {});
 });
 ```
 
 ```ts
-// file2.spec.ts
+// ./tests_e2e/file2.e2e.spec.ts
 
-describe('something (e2e)', () => {
+describe('something', () => {
     it('something', () => {});
 });
 ```
 
 Then we can run:
 
--   `bun test -t test` - this will run only tests inside `file1.spec.ts`, because top level describe contains `test` substring
--   `bun test -t e2e` - this will run only tests inside `file2.spec.ts`, because top level describe contains `e2e` substring
+-   `bun test ./tests/*.spec.ts` - this will run only tests inside `./tests/file1.spec.ts`
+-   `bun test ./tests_e2e/*.e2e.spec.ts` - this will run only tests inside `./tests_e2e/file2.e2e.spec.ts`
 
 This is useful, because sometimes we want to run only normal tests using mocks, but sometimes we want to run e2e tests using real database connections. This pattern allows us to select which tests are running.
 
