@@ -26,7 +26,10 @@ This template is designed for rapid development of APIs using ElysiaJS and Bun, 
 Template is deployed and available at [bun-elysia-template.magicfe.net/docs](https://bun-elysia-template.magicfe.net/docs).
 
 It does not use any database, but it is possible to add one. API respond with dummy data.
+
 We can trigger `404` error for get card by id and update card by id by sending invalid id (any other than `123`).
+
+We can trigger `401` error for create card by sending invalid user role (any other than `admin`).
 
 ## Prerequisites
 
