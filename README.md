@@ -165,6 +165,10 @@ File which exports `createApp` method. This method takes optional argument `di` 
 
 This file contains error handling middleware. It is used to handle errors in controllers.
 
+### `auth.ts`
+
+This file contains authentication macro. It is used to authenticate requests. Make sure to add `userRole` to security schemes in `swagger` configuration (or any other security scheme which is required by auth macro).
+
 ### `utils`
 
 General utility functions:
