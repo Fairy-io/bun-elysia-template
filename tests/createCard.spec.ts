@@ -49,6 +49,7 @@ describe('POST /cards', () => {
                     method: 'post',
                     headers: {
                         'Content-Type': 'application/json',
+                        'user-role': 'admin',
                     },
                     body: JSON.stringify(cardDto),
                 }),
@@ -78,6 +79,7 @@ describe('POST /cards', () => {
                     method: 'post',
                     headers: {
                         'Content-Type': 'application/json',
+                        'user-role': 'admin',
                     },
                     body: JSON.stringify(cardDto),
                 }),
@@ -113,6 +115,7 @@ describe('POST /cards', () => {
                     method: 'post',
                     headers: {
                         'Content-Type': 'application/json',
+                        'user-role': 'admin',
                     },
                     body: JSON.stringify(cardDto),
                 }),
@@ -150,6 +153,7 @@ describe('POST /cards', () => {
                     method: 'post',
                     headers: {
                         'Content-Type': 'application/json',
+                        'user-role': 'admin',
                     },
                     body: JSON.stringify(cardDto),
                 }),
@@ -188,6 +192,7 @@ describe('POST /cards', () => {
                     method: 'post',
                     headers: {
                         'Content-Type': 'application/json',
+                        'user-role': 'admin',
                     },
                     body: JSON.stringify(cardDto),
                 }),
@@ -211,5 +216,66 @@ describe('POST /cards', () => {
         });
 
         expect(status).toEqual(400);
+    });
+
+    it('returns unauthorized error if user role is not provided', async () => {
+        const cardDto = {
+            name: 'Name',
+            power: 10,
+            description: 'Description',
+        };
+
+        const { response, status } = await app
+            .handle(
+                new Request('http://localhost/cards', {
+                    method: 'post',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(cardDto),
+                }),
+            )
+            .then(async (res) => ({
+                response: await res.json(),
+                status: res.status,
+            }));
+
+        expect(response).toEqual({
+            error: true,
+            code: 'INSUFFICIENT_PRIVILEGES',
+        });
+
+        expect(status).toEqual(401);
+    });
+
+    it('returns unauthorized error if user role is not admin', async () => {
+        const cardDto = {
+            name: 'Name',
+            power: 10,
+            description: 'Description',
+        };
+
+        const { response, status } = await app
+            .handle(
+                new Request('http://localhost/cards', {
+                    method: 'post',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'user-role': 'user',
+                    },
+                    body: JSON.stringify(cardDto),
+                }),
+            )
+            .then(async (res) => ({
+                response: await res.json(),
+                status: res.status,
+            }));
+
+        expect(response).toEqual({
+            error: true,
+            code: 'INSUFFICIENT_PRIVILEGES',
+        });
+
+        expect(status).toEqual(401);
     });
 });

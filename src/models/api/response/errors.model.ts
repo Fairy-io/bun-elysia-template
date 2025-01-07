@@ -55,8 +55,17 @@ export const InvalidPayloadSchema = t.Object({
     }),
 });
 
+export const UnauthorizedSchema = t.Object({
+    error: t.Literal(true),
+    code: t.Literal('INSUFFICIENT_PRIVILEGES', {
+        examples: ['INSUFFICIENT_PRIVILEGES'],
+    }),
+});
+
 export type InvalidPayload =
     typeof InvalidPayloadSchema.static;
 
 export type InvalidPayloadFieldCode =
     InvalidPayload['details']['fields'][number]['code'];
+
+export type Unauthorized = typeof UnauthorizedSchema.static;
