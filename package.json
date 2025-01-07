@@ -12,8 +12,8 @@
     },
     "dependencies": {
         "@elysiajs/swagger": "^1.2.0",
-        "@sinclair/typebox": "^0.34.11",
-        "elysia": "latest"
+        "@sinclair/typebox": "^0.34.13",
+        "elysia": "1.1.26"
     },
     "devDependencies": {
         "bun-types": "latest",
