@@ -9,7 +9,7 @@ import { createApp } from '../src/createApp';
 import { CardsProviderMock } from './mocks/cards.provider';
 import { createCard } from './helpers/createCard';
 
-describe('GET /cards (test)', () => {
+describe('GET /cards', () => {
     let app: ReturnType<typeof createApp>;
     let CardsProvider: CardsProviderMock;
 

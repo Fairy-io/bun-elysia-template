@@ -1,4 +1,4 @@
-FROM oven/bun as prod
+FROM oven/bun:1.1.38 as prod
 
 WORKDIR /app
 
@@ -22,5 +22,7 @@ WORKDIR /app
 RUN ["bun", "install"]
 
 COPY scripts scripts
+COPY tests tests
+COPY tests_e2e tests_e2e
 
 CMD ["sleep", "infinity"]

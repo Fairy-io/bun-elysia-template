@@ -28,6 +28,15 @@ export const createApp = (di: Partial<DiStore> = {}) => {
                         description:
                             config.SERVICE_DESCRIPTION,
                     },
+                    components: {
+                        securitySchemes: {
+                            userRole: {
+                                type: 'apiKey',
+                                name: 'user-role',
+                                in: 'header',
+                            },
+                        },
+                    },
                 },
                 path: '/docs',
             }),

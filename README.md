@@ -26,11 +26,48 @@ This template is designed for rapid development of APIs using ElysiaJS and Bun, 
 Template is deployed and available at [bun-elysia-template.magicfe.net/docs](https://bun-elysia-template.magicfe.net/docs).
 
 It does not use any database, but it is possible to add one. API respond with dummy data.
+
 We can trigger `404` error for get card by id and update card by id by sending invalid id (any other than `123`).
+
+We can trigger `401` error for create card by sending invalid user role (any other than `admin`).
 
 ## Prerequisites
 
 1. Bun installed: `curl -fsSL https://bun.sh/install | bash`
+
+## Getting Started
+
+1. Click on "Use Template" green button or use terraform to create new repository as follows:
+
+```terraform
+terraform {
+    required_providers {
+        github = {
+            source = "integrations/github"
+            version = "~> 5.0"
+        }
+    }
+
+    resource "github_repository" "repo" {
+        name = "your-repository-name"
+        template {
+            owner                = "Fairy-io"
+            repository           = "bun-elysia-template"
+            include_all_branches = false
+        }
+    }
+}
+```
+
+2. Clone repository `git clone https://github.com/your-user-name-or-organization-name/your-repository-name.git` (or use ssh)
+
+Don't forget to replace `your-user-name-or-organization-name/your-repository-name` with your github username or organization name and repository name
+
+3. Cd into repository `cd your-repository-name` (use your real repository name)
+
+4. Install dependencies running `bun install`
+
+5. Run `bun dev` to start application
 
 ## Commands
 
@@ -66,32 +103,33 @@ bun e2e:watch # run e2e tests in watch mode
 
 `bun test` will run all tests suites (e.g. `*.spec.ts` files, `*.test.ts` files, etc.).
 
-But if it is not what we want, we can select tests for run.
+To separate unit tests from end-to-end tests, we organize them into different directories:
 
-Consider following examples:
+-   Unit tests are placed in the `tests/` directory
+-   End-to-end tests are placed in the `tests_e2e/` directory
 
 ```ts
-// file1.spec.ts
+// ./tests/file1.spec.ts
 
 import { describe, it } from 'bun:test';
 
-describe('something (test)', () => {
+describe('something', () => {
     it('something', () => {});
 });
 ```
 
 ```ts
-// file2.spec.ts
+// ./tests_e2e/file2.e2e.spec.ts
 
-describe('something (e2e)', () => {
+describe('something', () => {
     it('something', () => {});
 });
 ```
 
 Then we can run:
 
--   `bun test -t test` - this will run only tests inside `file1.spec.ts`, because top level describe contains `test` substring
--   `bun test -t e2e` - this will run only tests inside `file2.spec.ts`, because top level describe contains `e2e` substring
+-   `bun test ./tests/*.spec.ts` - this will run only tests inside `./tests/file1.spec.ts`
+-   `bun test ./tests_e2e/*.e2e.spec.ts` - this will run only tests inside `./tests_e2e/file2.e2e.spec.ts`
 
 This is useful, because sometimes we want to run only normal tests using mocks, but sometimes we want to run e2e tests using real database connections. This pattern allows us to select which tests are running.
 
@@ -163,6 +201,10 @@ File which exports `createApp` method. This method takes optional argument `di` 
 ### `onError.ts`
 
 This file contains error handling middleware. It is used to handle errors in controllers.
+
+### `auth.ts`
+
+This file contains authentication macro. It is used to authenticate requests. Make sure to add `userRole` to security schemes in `swagger` configuration (or any other security scheme which is required by auth macro).
 
 ### `utils`
 

@@ -76,7 +76,9 @@ export const CardsController = new Elysia({
             response: {
                 201: 'Card',
                 400: 'InvalidPayload',
+                401: 'Unauthorized',
             },
+            auth: 'admin',
         },
     )
 
