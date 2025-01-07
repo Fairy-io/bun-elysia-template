@@ -19,11 +19,22 @@ const optionalConfig = validateObject(
     configSchema,
 );
 
+const parseServiceName = (serviceName: string) => {
+    return serviceName
+        .replace(/-/g, ' ')
+        .replace(/\b\w/g, (char) => char.toUpperCase());
+};
+
 export const config: Required<typeof optionalConfig> = {
-    PORT: 3000,
-    SERVICE_NAME: 'API',
-    SERVICE_DESCRIPTION: 'Awesome API',
-    ...optionalConfig,
+    PORT: optionalConfig.PORT || 3000,
+
+    SERVICE_NAME: parseServiceName(
+        optionalConfig.SERVICE_NAME || 'API',
+    ),
+
+    SERVICE_DESCRIPTION:
+        optionalConfig.SERVICE_DESCRIPTION || 'Awesome API',
+
     SERVICE_VERSION:
         optionalConfig.SERVICE_VERSION || 'ver. 0.0.0',
 };
