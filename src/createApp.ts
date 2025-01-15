@@ -3,22 +3,25 @@ import { swagger } from '@elysiajs/swagger';
 import { config } from './config';
 import { onError } from './onError';
 import { CardsController } from './controllers';
-import { provide } from './utils/di';
-import { CardsProvider } from './providers';
+import { CardsProvider, ConfigProvider } from './providers';
+import { di } from './plugins/di';
 
 export type DiStore = {
     CardsProvider: CardsProvider;
+    ConfigProvider: ConfigProvider;
 };
 
-export const createApp = (di: Partial<DiStore> = {}) => {
+export const createApp = (
+    diStore: Partial<DiStore> = {},
+) => {
     const defaultDiStore: DiStore = {
         CardsProvider: new CardsProvider(),
+        ConfigProvider: new ConfigProvider(),
     };
-
-    provide({ ...defaultDiStore, ...di });
 
     return new Elysia()
         .use(onError)
+        .use(di({ ...defaultDiStore, ...diStore }))
         .use(
             swagger({
                 documentation: {
