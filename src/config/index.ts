@@ -3,6 +3,7 @@ import { validateObject } from '../utils/validateObject';
 import { parseIntObject } from '../utils/parseIntObject';
 
 const configSchema = t.Object({
+    ENV: t.String(),
     PORT: t.Optional(t.Numeric()),
     SERVICE_NAME: t.Optional(t.String()),
     SERVICE_VERSION: t.Optional(t.String()),
@@ -27,6 +28,8 @@ const parseServiceName = (serviceName: string) => {
 
 export const config: Required<typeof optionalConfig> = {
     PORT: optionalConfig.PORT || 3000,
+
+    ENV: optionalConfig.ENV,
 
     SERVICE_NAME: parseServiceName(
         optionalConfig.SERVICE_NAME || 'API',
