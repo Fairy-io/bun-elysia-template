@@ -214,7 +214,11 @@ General utility functions:
 
 -   `parseIntObject` - This function is parsing any numeric object field (e.g. `{ num: '123' }`) into integers (e.g. `{ num: 123 }`).
 
--   `di.ts`: `inject` (for injecting values to controller) and `provide` (for providing values).
+### `plugins`
+
+This directory contains different plugins.
+
+-   `di.ts` - dependency injection plugin
 
 #### Dependency Injection (di)
 
@@ -226,12 +230,16 @@ export type DiStore = {
     CardsRepository: CardsRepositoryInterface;
 };
 
-export const createApp = (di: Partial<DiStore> = {}) => {
+export const createApp = (
+    diStore: Partial<DiStore> = {},
+) => {
     const defaultDiStore: DiStore = {
         CardsRepository: new CardsRepository(), // this class implements CardsRepositoryInterface
     };
 
-    provide({ ...defaultDiStore, ...di });
+    // rest of the code
+
+    .use(di({ ...defaultDiStore, ...diStore }))
 
     // rest of the code
 };
