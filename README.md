@@ -167,7 +167,6 @@ src/
 ├── createApp.ts     # App factory with DI support
 ├── utils/           # Utility functions
 ├── onError.ts       # Error handling middleware
-├── config/          # Environment validation
 ├── controllers/     # Route handlers
 ├── models/          # DTOs and data models
 └── providers/       # Data access layer
@@ -262,14 +261,6 @@ new Elysia().get(
 );
 ```
 
-### `config`
-
-It uses `validateObject` and `parseIntObject` functions to parse and validate environment variables. In current setup every environment variable should have value assigned, so it is required to provide default values for optional environment variables.
-
-Configuration is stored in `src/config/index.ts` file.
-
-To get started, create `.env` file based on `.env.example`.
-
 ### `controllers`
 
 Route definitions and handlers.
@@ -292,6 +283,14 @@ Each application can use different providers:
 
 -   data access layer - for accessing database
 -   business logic layer - for implementing business logic
+
+#### `config.provider.ts`
+
+It uses `validateObject` and `parseIntObject` functions to parse and validate environment variables. In current setup every environment variable should have value assigned, so it is required to provide default values for optional environment variables.
+
+To get started, create `.env` file based on `.env.example`.
+
+It is async function, because in future it can be used to fetch configuration from external sources (e.g. vault).
 
 ## `send` Method
 
