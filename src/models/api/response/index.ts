@@ -5,6 +5,7 @@ export {
     InvalidPayloadSchema,
     UnauthorizedSchema,
 } from './errors.model';
+export { InfoSchema } from './info.model';
 
 export type { Card } from './card.model';
 export type {
