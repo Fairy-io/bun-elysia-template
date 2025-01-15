@@ -16,7 +16,9 @@ export const InfoController = new Elysia({
 
             const config = await configProvider.getConfig();
 
-            return send('OK', { environment: config.ENV });
+            return send('OK', {
+                environment: config.SERVICE_ENV,
+            });
         },
         {
             detail: {

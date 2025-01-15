@@ -24,7 +24,7 @@ describe('GET /info', () => {
 
     it('returns environment variable', async () => {
         configProvider.getConfig.mockReturnValue(
-            Promise.resolve({ ENV: 'test' }),
+            Promise.resolve({ SERVICE_ENV: 'test' }),
         );
 
         const { response, status } = await app

@@ -3,7 +3,7 @@ import { parseIntObject } from '../utils/parseIntObject';
 import { validateObject } from '../utils/validateObject';
 
 const configSchema = t.Object({
-    ENV: t.String(),
+    SERVICE_ENV: t.String(),
     PORT: t.Optional(t.Numeric()),
     SERVICE_NAME: t.Optional(t.String()),
     SERVICE_VERSION: t.Optional(t.String()),
@@ -33,7 +33,7 @@ export class ConfigProvider
         return {
             PORT: config.PORT || 3000,
 
-            ENV: config.ENV,
+            SERVICE_ENV: config.SERVICE_ENV,
 
             SERVICE_NAME: this.parseServiceName(
                 config.SERVICE_NAME || 'API',
