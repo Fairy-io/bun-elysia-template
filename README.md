@@ -451,7 +451,11 @@ See [LICENSE](LICENSE) for more information.
 -   Added `plugins` directory and `di` plugin
     -   Improved dependency injection
     -   Removed `utils/di.ts` which was causing typescript errors
--   Added `config.provider.ts`
+-   Added `config.provider.ts` to improve testing
+    -   `src/config/index.ts` was removed
+-   Swagger configuration has been moved to `src/index.ts`
+    -   Swagger configuration was removed from `createApp.ts` because it was causing issues during testing and swagger configuration was not needed in tests
+-   Added `GET /info` endpoint and tests
 
 #### 1.1.0 -> 2.0.0 migration
 
@@ -484,9 +488,117 @@ See [LICENSE](LICENSE) for more information.
 -   provide({ ...defaultDiStore, ...di });
 
 +   .use(di({...defaultDiStore, ...diStore}))
+-   .use(
+-       swagger({
+-           documentation: {
+-               info: {
+-                   title: config.SERVICE_NAME,
+-                   version: config.SERVICE_VERSION,
+-                   description:
+-                       config.SERVICE_DESCRIPTION,
+-               },
+-               components: {
+-                   securitySchemes: {
+-                       userRole: {
+-                           type: 'apiKey',
+-                           name: 'user-role',
+-                           in: 'header',
+-                       },
+-                   },
+-               },
+-           },
+-           path: '/docs',
+-       }),
+-   )
+```
+
+```diff
+// src/index.ts
+-   import { config } from './config';
+
++   import swagger from '@elysiajs/swagger';
+
++   import { ConfigProvider } from './providers';
+
+-   const app = createApp();
+
++   const configProvider = new ConfigProvider();
++   const {
++       SERVICE_NAME,
++       SERVICE_DESCRIPTION,
++       SERVICE_VERSION,
++       PORT,
++   } = await configProvider.getConfig();
+
+-   app.listen(config.PORT);
+
++   const app = createApp({ ConfigProvider: configProvider });
+
++   app.use(
++       swagger({
++           documentation: {
++               info: {
++                   title: SERVICE_NAME,
++                   version: SERVICE_VERSION,
++                   description: SERVICE_DESCRIPTION,
++               },
++               components: {
++                   securitySchemes: {},
++               },
++           },
++           path: '/docs',
++       }),
++   ).listen(PORT);
+```
+
+```diff
+// src/providers/config.provider.ts
++   import { t } from 'elysia';
++   import { parseIntObject } from '../utils/parseIntObject';
++   import { validateObject } from '../utils/validateObject';
+
++   const configSchema = t.Object({
++       // your schema
++   });
+
++   type Config = Required<typeof configSchema.static>;
+
++   export interface ConfigProviderInterface {
++       getConfig(): Promise<Config>;
++   }
+
++   export class ConfigProvider
++       implements ConfigProviderInterface
++   {
++       async getConfig(): Promise<Config> {
++           const config = validateObject(
++               parseIntObject({
++                   ...process.env,
++                   SERVICE_VERSION: process.env.SERVICE_VERSION
++                    ? `ver. ${process.env.SERVICE_VERSION}`
++                    : undefined,
++            }),
++            configSchema,
++        );
+
++       return {
++           // your config
++    }
+
++    private parseServiceName(serviceName: string) {
++        return serviceName
++            .replace(/-/g, ' ')
++            .replace(/\b\w/g, (char) => char.toUpperCase());
++     }
++  }
 ```
 
 ```diff
 // src/utils/di.ts
+-   remove this file
+```
+
+```diff
+// src/config/index.ts
 -   remove this file
 ```
