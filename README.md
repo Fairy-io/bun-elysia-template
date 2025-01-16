@@ -602,4 +602,4 @@ See [LICENSE](LICENSE) for more information.
 -   remove this file
 ```
 
-Additionally copy `plugins/di.ts` file.
+Additionally copy [src/plugins/di.ts](src/plugins/di.ts) file into `src/plugins` directory.
