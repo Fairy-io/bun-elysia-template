@@ -601,3 +601,5 @@ See [LICENSE](LICENSE) for more information.
 // src/config/index.ts
 -   remove this file
 ```
+
+Additionally copy `plugins/di.ts` file.
